@@ -29,8 +29,8 @@ module.exports = {
     generateToken: function (email, role) {
         return new Promise((resolve, reject) => {
             const payload = {
-                email: email,
-                role: role
+                'email': email,
+                'role': role
             }
 
             jwt.sign(payload, process.env.secretKey, {
@@ -64,8 +64,8 @@ module.exports = {
         const salt = this.generateSalt()
         const hash = crypto.createHmac('sha512', salt).update(password).digest('hex')
         return {
-            hash: hash,
-            salt: salt
+            'hash': hash,
+            'salt': salt
         }
     },
 
@@ -81,8 +81,8 @@ module.exports = {
         const hash = crypto.createHmac('sha512', salt).update(password).digest('hex')
 
         return {
-            hash: hash,
-            salt: salt
+            'hash': hash,
+            'salt': salt
         }
     },
 
@@ -103,9 +103,9 @@ module.exports = {
      * Generates a random alphanumeric string
      * @memberof module:Authenticator
      * @function generateSalt
-     * @return {String} a 16-byte alphanumeric string
+     * @return {String} a 32-byte alphanumeric string
      */
     generateSalt: function () {
-        return crypto.randomBytes(16).toString('hex')
+        return crypto.randomBytes(32).toString('hex')
     }
 }

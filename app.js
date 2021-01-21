@@ -13,14 +13,17 @@ config.populateEnvironment();
 const bodyParser = require('body-parser');
 
 const MessageRepository = new (require('./models/MessageRepository'))(connection);
+const UserRepository = new (require('./models/UserRepository'))(connection);
 
-const Router = require('./routes/MessageRouter');
-const MessageRouter = Router(MessageRepository);
+const Router = require('./routes');
+const MessageRouter = Router.MessageRouter(MessageRepository);
+const AuthRouter = Router.AuthRouter(UserRepository);
 
 /* Allows express to parse body parameters */
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
 app.use('/contact', MessageRouter);
+app.use('/', AuthRouter);
 
 const server = app.listen(port);

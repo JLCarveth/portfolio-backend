@@ -10,13 +10,13 @@ class MessageRepository {
      * @param {String} message 
      */
     async insertMessage(name, email, message) {
-        var _that = this;
+        var that = this;
         return new Promise(function (resolve, reject) {
-            if (!_that.database) {
+            if (!that.database) {
                 reject("No database injected");
             }
             const msg = [name,email,message];
-            _that.database.query(
+            that.database.query(
                 'INSERT INTO `messages` (name, email, message) VALUES (?,?,?)',
                 msg, (error, result) => {
                     if (error) reject(error);
