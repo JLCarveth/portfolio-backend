@@ -43,3 +43,6 @@ Installing the frontend should be as simple as cloning the frontend repository i
 git clone https://github.com/jlcarveth/jlcarveth.github.io /var/www/html/
 ```
 Ensure Apache is running with the command `sudo systemctl status apache2`, and navigate to `localhost:80` in your browser.
+
+### Running the Backend Service
+First, ensure that `app.js` is runnable by executing `chmod +x app.js` in the backend installation directory.
