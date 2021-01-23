@@ -1,17 +1,13 @@
 const mysql = require('mysql2/promise');
-const host = 'localhost';
-const user = 'jlcportfolio';
-const password = 'BippityBoppityBoo69420!';
-const database = 'jlcarvethdev';
 
 const pool = mysql.createPool({
     connectionLimit: 20,
-    host        : host,
-    user        : user,
-    password    : password,
-    database    : database
+    host: process.env.mysql.host,
+    user: process.env.mysql.user,
+    password: process.env.mysql.password,
+    database: process.env.mysql.database
 });
 
 module.exports = {
-    connection : pool,
+    connection: pool,
 }

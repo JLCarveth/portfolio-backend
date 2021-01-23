@@ -33,7 +33,7 @@ function createRouter(UserRepository) {
         UserRepository.getUser(email).then((results) => {
             // If there are no results
             if (results[0].length == 0) {
-                res.status(401).redirect('https://localhost/error.html');
+                res.status(401).redirect('https://jlcarveth.dev/error.html');
             }
             // Hash the password guess and compare to stored hash
             const user = results[0][0];
@@ -45,13 +45,13 @@ function createRouter(UserRepository) {
                         'maxAge': 3600 * 72,
                         'httpOnly': true
                     });
-                    res.status(200).redirect('https://localhost/');
+                    res.status(200).redirect('https://jlcarveth.dev/');
                 }).catch((error) => {
-                    res.status(500).redirect('https://localhost/error.html');
+                    res.status(500).redirect('https://jlcarveth.dev/error.html');
                 });
             }
         }).catch((error) => {
-            res.status(500).redirect('https://localhost/error.html');
+            res.status(500).redirect('https://jlcarveth.dev/error.html');
         });
     });
 
@@ -76,12 +76,12 @@ function createRouter(UserRepository) {
                     'maxAge' : 3600 * 72,
                     'httpOnly' : true
                 });
-                res.status(200).redirect('https://localhost/');
+                res.status(200).redirect('https://jlcarveth.dev/');
             }).catch((error) => {
-                res.status(500).redirect('https://localhost/error.html');
+                res.status(500).redirect('https://jlcarveth.dev/error.html');
             });
         }).catch((error) => {
-            res.status(500).redirect('https://localhost/error.html');
+            res.status(500).redirect('https://jlcarveth.dev/error.html');
         });
     });
 
