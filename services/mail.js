@@ -19,9 +19,9 @@ class MailDispatcher {
             auth : {
                 'type' :        'OAuth2',
                 'user' :        process.env.emailAddress,
-                'clientId':     process.env.oauth.clientID,
-                'clientSecret': process.env.oauth.clientSecret,
-                'refreshToken': process.env.oauth.refreshToken,
+                'clientId':     process.env.clientID,
+                'clientSecret': process.env.clientSecret,
+                'refreshToken': process.env.refreshToken,
                 'accessToken': accessToken
             }
         });
