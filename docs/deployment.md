@@ -31,6 +31,8 @@ Thie program relies on a configuration file, `/config/config.json`. This file ha
 - **clientID, clientSecret, refreshToken** : These can be obtained by setting up a Google OAuth2 credential.
 - **MySQL**: MySQL database settings. Hopefully self-explanatory.
 
+From your install directory, run `touch config/config.json`. Then use your favorite text editor to apply your settings.
+
 ### MySQL Setup
 The database and login into can be modified in `config.json`. Ensure that the database and user exist before running the program.
 At the moment, the software doesn't create the SQL tables. This needs to be done by running the `.sql` files found within the `sql/` directory.

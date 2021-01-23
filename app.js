@@ -2,12 +2,12 @@ const express = require('express');
 const app = express();
 const port = 29742;
 
-const db = require('./db');
-var connection = db.connection;
-
 /* Initialize config */
 const config = require('./config');
 config.populateEnvironment();
+
+const db = require('./db');
+var connection = db.connection;
 
 /* Third Party Libraries */
 const bodyParser = require('body-parser');
