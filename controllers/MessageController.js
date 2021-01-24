@@ -30,7 +30,7 @@ class MessageController {
                     'subject': 'You\'ve got mail!',
                     'text': "Sender: " + email
                         + "\nName: " + name
-                        + "Message: " + message
+                        + "\nMessage: " + message
                 }).catch((error) => {
                     // Error sending the message
                     reject("Error dispatching email");
