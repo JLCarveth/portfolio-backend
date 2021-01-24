@@ -2,7 +2,7 @@
  * @module MessageRouter
  * @requires express
  * 
- * This file defines the API routes regarding Messaging
+ * This file defines the API routes regarding Authentication
  */
 
 /**
@@ -10,9 +10,10 @@
  */
 const express = require('express');
 
-const auth = require('../auth');
+const UnauthorizedError = require('../errors/UnauthorizedError');
+const UserNotFoundError = require('../errors/UserNotFoundError');
 
-function createRouter(UserRepository) {
+function createRouter(UserController) {
     /**
      * @const router
      * @namespace router
@@ -30,29 +31,24 @@ function createRouter(UserRepository) {
         // Check for existing user in database
         const email     = req.body.emailInput;
         const password  = req.body.passwordInput;
-        UserRepository.getUser(email).then((results) => {
-            // If there are no results
-            if (results[0].length == 0) {
-                res.status(401).redirect('https://jlcarveth.dev/error.html');
-            }
-            // Hash the password guess and compare to stored hash
-            const user = results[0][0];
-            if (auth.comparePassword(password, user.hash, user.salt)) {
-                // Password checks out, givem a token!
-                auth.generateToken(email, 'admin').then((token) => {
-                    res.cookie('token', token, {
-                        'domain': 'https://jlcarveth.dev',
-                        'maxAge': 3600 * 72,
-                        'httpOnly': true
-                    });
-                    res.status(200).redirect('https://jlcarveth.dev/');
-                }).catch((error) => {
-                    res.status(500).redirect('https://jlcarveth.dev/error.html');
-                });
-            }
+        UserController.login(email, password).then((token) => {
+            res.cookie('token', token, {
+                'domain': 'https://jlcarveth.dev',
+                'maxAge': 3600 * 72,
+                'httpOnly': true
+            });
+            res.status(200).redirect('https://jlcarveth.dev/');
         }).catch((error) => {
-            res.status(500).redirect('https://jlcarveth.dev/error.html');
-        });
+            // Will have more meaningful error responses once the frontend
+            // is using React.js instead of static
+            if (error instanceof UnauthorizedError) {
+                res.status(401).redirect('https://jlcarveth.dev/error.html');
+            } else if (error instanceof UserNotFoundError) {
+                res.status(401).redirect('https://jlcarveth.dev/error.html');
+            } else {
+                res.status(500).redirect('https://jlcarveth.dev/error.html');
+            }
+        })
     });
 
     /**
@@ -65,21 +61,9 @@ function createRouter(UserRepository) {
         const name      = req.body.nameInput;
         const email     = req.body.emailInput;
         const password  = req.body.passwordInput;
-        // MySQL will worry about checking that the email is unique
-        // So just generate the salt + hash the password.
-        const hash = auth.hashWithSalt(password, auth.generateSalt());
-        UserRepository.createUser(name, email, hash.hash, hash.salt).then((result) => {
-            // Generate a token and send it back as a cookie
-            auth.generateToken(email, 'admin').then((token) => {
-                res.cookie('token', token, {
-                    'domain' : 'https://jlcarveth.dev',
-                    'maxAge' : 3600 * 72,
-                    'httpOnly' : true
-                });
-                res.status(200).redirect('https://jlcarveth.dev/');
-            }).catch((error) => {
-                res.status(500).redirect('https://jlcarveth.dev/error.html');
-            });
+
+        UserController.register(name, email, password).then((result) => {
+            res.status(200).redirect('https://jlcarveth.dev/');
         }).catch((error) => {
             res.status(500).redirect('https://jlcarveth.dev/error.html');
         });

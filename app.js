@@ -16,9 +16,12 @@ const bodyParser = require('body-parser');
 const MessageRepository = new (require('./models/MessageRepository'))(connection);
 const UserRepository = new (require('./models/UserRepository'))(connection);
 
+const UserController = new (require('./controllers/UserController'))(UserRepository);
+const MessageController = new (require('./controllers/MessageController'))(MessageRepository);
+
 const Router = require('./routes');
-const MessageRouter = Router.MessageRouter(MessageRepository);
-const AuthRouter = Router.AuthRouter(UserRepository);
+const MessageRouter = Router.MessageRouter(MessageController);
+const AuthRouter = Router.AuthRouter(UserController);
 
 /* Allows express to parse body parameters */
 app.use(bodyParser.json())

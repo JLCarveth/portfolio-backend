@@ -18,7 +18,7 @@ const mail = require('../services/mail');
 // use Oauth to fetch a new  refresh token
 const MailDispatcher = new mail('ya29.a0AfH6SMBYLp7jBCUEcY8EPzhZtoDEHITwSxiNty3Ewm0VKn0a1aZEanG1J8DAutA2zhAIvNADY6xFRaYsSBp40hMVTQFJkaq4T7bFVZWlRVelD3e4hQb1bHz1IdydCnRB7qGEZj7tkEWGXeuxtAdYXxVOn3O8ZKkh4gasAC5wMI0');
 
-function createRouter(MessageRepository) {
+function createRouter(MessageController) {
     /**
      * @const router
      * @namespace router
@@ -42,19 +42,11 @@ function createRouter(MessageRepository) {
             return;
         }
 
-        /* Otherwise, INSERT the message into the Database */
-        MessageRepository.insertMessage(name, email, message).then(
-            MailDispatcher.sendMessage({
-            'from'      : email,
-            'to'        : process.env.emailAddress,
-            'subject'     : 'You\'ve got mail!',
-            'text'        : "Sender: " + email
-                            + "\nName: " + name
-                            + "Message: " + message
-        })).catch((error) => {
+        MessageController.onMessage(name, email, message).then(() => {
+            res.status(200).redirect("https://jlcarveth.dev/success.html");
+        }).catch((error) => {
             res.status(500).send('Internal Server Error');
-        })
-        res.status(200).redirect("https://jlcarveth.dev/success.html")
+        });
     });
 
     /**
