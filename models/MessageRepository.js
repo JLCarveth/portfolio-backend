@@ -9,7 +9,7 @@ class MessageRepository {
      * @param {String} email 
      * @param {String} message 
      */
-    async insertMessage(name, email, message) {
+    createMessage(name, email, message) {
         var that = this;
         return new Promise(function (resolve, reject) {
             if (!that.database) {

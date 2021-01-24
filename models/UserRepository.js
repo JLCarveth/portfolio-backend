@@ -1,3 +1,6 @@
+/**
+ * Contains code for CRUD operations on the User data within the database
+ */
 class UserRepository {
     constructor(database) {
         this.database = database;
@@ -10,7 +13,7 @@ class UserRepository {
      * @param {*} hash the user's hashed password
      * @param {*} salt the salt used to hash the password
      */
-    async createUser(name, email, hash, salt) {
+    createUser(name, email, hash, salt) {
         var that = this;
         return new Promise((resolve, reject) => {
             console.log('hash: ' + hash)
@@ -22,7 +25,7 @@ class UserRepository {
         });
     }
 
-    async getUser(email) {
+    getUser(email) {
         var that = this;
         return new Promise((resolve, reject) => {
             if (!that.database) {

@@ -13,7 +13,7 @@
 const nodemailer = require('nodemailer');
 
 class MailDispatcher {
-    constructor(accessToken) {
+    constructor() {
         this.transporter = nodemailer.createTransport({
             service: 'gmail',
             auth : {
@@ -22,7 +22,6 @@ class MailDispatcher {
                 'clientId':     process.env.clientID,
                 'clientSecret': process.env.clientSecret,
                 'refreshToken': process.env.refreshToken,
-                'accessToken': accessToken
             }
         });
     }
@@ -35,7 +34,7 @@ class MailDispatcher {
      * @property {String} mailOptions.subject
      * @property {String} mailOptions.text
      */
-    async sendMessage(mailOptions) {
+    sendMessage(mailOptions) {
         var that = this;
         return new Promise((resolve,reject) => {
             that.transporter.sendMail(mailOptions, (error, result) => {
