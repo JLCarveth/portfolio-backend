@@ -24,7 +24,7 @@ const AuthRouter = Router.AuthRouter(UserRepository);
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-app.use('/contact', MessageRouter);
-app.use('/', AuthRouter);
+app.use('/api/contact', MessageRouter);
+app.use('/api/', AuthRouter);
 
 const server = app.listen(port);
