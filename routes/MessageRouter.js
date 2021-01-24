@@ -48,7 +48,9 @@ function createRouter(MessageRepository) {
             'from'      : email,
             'to'        : process.env.emailAddress,
             'subject'     : 'You\'ve got mail!',
-            'text'        : "Sender: " + email +"\nMessage: " + message
+            'text'        : "Sender: " + email
+                            + "\nName: " + name
+                            + "Message: " + message
         })).catch((error) => {
             res.status(500).send('Internal Server Error');
         })
