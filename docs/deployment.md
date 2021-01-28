@@ -3,10 +3,10 @@
 This document will cover the steps that I took to deploy both the backend and frontend onto a DigitalOcean VM using Nginx.
 
 ## Installing Required Software
-You'll need a couple software packages to properly deploy both the backend and frontent. Depending on the distribution you chose, some of these tools may already be installed. 
+You'll need a couple software packages to properly deploy both the backend and frontend. Depending on the distribution you chose, some of these tools may already be installed. 
 - Nginx
 - MySQL
-- Node and NPM (Use Node Version Manager (NVM) for easy install)
+- Node and NPM (Use Node Version Manager (NVM) for an easy install)
 - Git for pulling the source code
 - Certbot for the SSL certificate
 
@@ -16,7 +16,7 @@ The first step towards deploying the application will be to clone the git reposi
 git clone https://github.com/jlcarveth/portfolio-backend.git /opt/portfolio-backend/
 ```
 ## Configuration
-Thie program relies on a configuration file, `/config/config.json`. This file has the following structure:
+The program relies on a configuration file, `/config/config.json`. This file has the following structure:
 ```
 {
     "secretKey": "",
@@ -39,10 +39,15 @@ From your install directory, run `touch config/config.json`. Then use your favor
 
 ### MySQL Setup
 The database and login into can be modified in `config.json`. Ensure that the database and user exist before running the program.
-At the moment, the software doesn't create the SQL tables. This needs to be done by running the `.sql` files found within the `sql/` directory.
+At the moment, the software doesn't create the SQL tables. This needs to be done by running the `.sql` files found within the `sql/` directory. This can be done with the following commands:
+```
+mysql -u root -p YOUR_DB_NAME < sql/CREATE_USER_TABLE.sql
+mysql -u root -p YOUR_DB_NAME < sql/CREATE_MESSAGE_TABLE.sql
+mysql -u root -p YOUR_DB_NAME < sql/CREATE_USER.sql
+```
 
 ## Configuring Nginx
-A small change needs to be made to the nginx configuration to ensure that requests to the backend are not recieved by the server hosting the frontend, and vice-versa. Execute `sudo nano /etc/nginx/sites-available/default` to modify the configuration file. Create a new block under `location { ... }` consisting of the following:
+A small change needs to be made to the nginx configuration to ensure that requests to the backend are not received by the server hosting the frontend, and vice-versa. Execute `sudo nano /etc/nginx/sites-available/default` to modify the configuration file. Create a new block under `location { ... }` consisting of the following:
 ```
 location /api {
                 proxy_pass http://localhost:29742;
@@ -62,5 +67,18 @@ git clone https://github.com/jlcarveth/jlcarveth.github.io /var/www/html/
 ```
 Ensure nginx is running with the command `sudo systemctl status nginx`, and navigate to `localhost:80` in your browser.
 
-### Running the Backend Service
-First, ensure that `app.js` is runnable by executing `chmod +x app.js` in the backend installation directory. Then copy the service file into the systemd service directory: `sudo cp portfolio.service /etc/systemd/system`
+## Running the Backend Service
+First, ensure that `app.js` is runnable by executing `chmod +x app.js` in the backend installation directory. Then copy the service file into the systemd service directory: `sudo cp portfolio.service /etc/systemd/system`. Now you can interact with your service with the following commands:
+```
+# Start the service
+sudo systemctl start portfolio
+# Restart the service
+sudo systemctl restart portfolio
+# Stop the service
+sudo systemctl stop portfolio
+# See the status of the service
+sudo systemctl status portfolio
+```
+
+## Upgrading
+Upgrading the frontend is as simple as running `git pull` from within the `/var/www/html/` directory. Upgrading the backend service has an extra step, but is still quite straightforward. Simply stop the service, run `git pull` from within your installation directory (mine was `/opt/portfolio-backend`), and start the service again.
