@@ -30,7 +30,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use('/api/contact', MessageRouter);
 app.use('/api/', AuthRouter);
 
-app.get('/ping', (req,res) => {
+app.get('/api/ping', (req,res) => {
     res.status(200).send("OK");
 });
 
