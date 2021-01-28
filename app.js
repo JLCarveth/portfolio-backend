@@ -30,4 +30,8 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use('/api/contact', MessageRouter);
 app.use('/api/', AuthRouter);
 
+app.get('/ping', (req,res) => {
+    res.status(200).send("OK");
+});
+
 const server = app.listen(port);
