@@ -43,7 +43,7 @@ function createRouter(MessageController) {
         }
 
         MessageController.onMessage(name, email, message).then(() => {
-            res.status(200).redirect("https://jlcarveth.dev/success.html");
+            res.status(200).redirect("https://jlcarveth.dev/index.html?success=1#footer");
         }).catch((error) => {
             res.status(500).send('Internal Server Error');
         });
