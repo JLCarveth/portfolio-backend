@@ -16,7 +16,7 @@ const express = require('express');
 const mail = require('../services/mail');
 
 // use Oauth to fetch a new  refresh token
-const MailDispatcher = new mail('ya29.a0AfH6SMBYLp7jBCUEcY8EPzhZtoDEHITwSxiNty3Ewm0VKn0a1aZEanG1J8DAutA2zhAIvNADY6xFRaYsSBp40hMVTQFJkaq4T7bFVZWlRVelD3e4hQb1bHz1IdydCnRB7qGEZj7tkEWGXeuxtAdYXxVOn3O8ZKkh4gasAC5wMI0');
+const MailDispatcher = new mail('---');
 
 function createRouter(MessageController) {
     /**
