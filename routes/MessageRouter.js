@@ -35,9 +35,9 @@ function createRouter(MessageController) {
    * @memberof module:MessageRouter~router
    */
   router.post("/", (req, res) => {
-    const name = req.body.nameInput;
-    const email = req.body.emailInput;
-    const message = req.body.messageInput;
+    const name = req.body.name;
+    const email = req.body.email;
+    const message = req.body.message;
 
     /* Check for any missing fields */
     if (!name || !email || !message) {
