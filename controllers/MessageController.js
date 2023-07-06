@@ -22,7 +22,6 @@ class MessageController {
    * @param {*} message
    */
   onMessage(name, email, message) {
-    console.log(`MessageController.onMessage(${name}, ${email}, ${message})`);
     return new Promise((resolve, reject) => {
       this.repository
         .createMessage(name, email, message)
@@ -34,13 +33,13 @@ class MessageController {
             text:
               "Sender: " + email + "\nName: " + name + "\nMessage: " + message,
           })
-            .catch((error) => {
+            .catch((_error) => {
               // Error sending the message
               reject("Error dispatching email");
             })
             .then(resolve())
         )
-        .catch((error) => {
+        .catch((_error) => {
           // Error creating the message in the database
           reject("Error inserting to the database");
         });
@@ -48,4 +47,3 @@ class MessageController {
   }
 }
 module.exports = MessageController;
-

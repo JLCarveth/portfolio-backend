@@ -47,4 +47,3 @@ class MailDispatcher {
 }
 
 module.exports = MailDispatcher;
-

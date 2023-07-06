@@ -1,7 +1,10 @@
-const MessageRouter = require('./MessageRouter');
-const AuthRouter = require('./AuthRouter');
+const MessageRouter = require("./MessageRouter");
+const AuthRouter = require("./AuthRouter");
+const LogRouter = require("./LogRouter");
 
 module.exports = {
-    'MessageRouter' : MessageRouter,
-    'AuthRouter' : AuthRouter
-}
+  MessageRouter,
+  AuthRouter,
+  LogRouter,
+};
+

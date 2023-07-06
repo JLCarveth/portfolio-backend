@@ -21,10 +21,14 @@ const MessageController = new (require("./controllers/MessageController"))(
 const Router = require("./routes");
 const MessageRouter = Router.MessageRouter(MessageController);
 const AuthRouter = Router.AuthRouter(UserController);
+const LogRouter = Router.LogRouter;
 
 /* Allows express to parse body parameters */
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+/* Log each incoming request to stdout */
+app.use("*", LogRouter);
 
 app.use("/api/contact", MessageRouter);
 app.use("/api/", AuthRouter);
