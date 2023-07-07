@@ -45,9 +45,15 @@ function createRouter(MessageController) {
       return;
     }
 
+    /* Check if the honeypot field was set */
+    if (req.body.city) {
+      // This is most likely a BOT
+      res.status(200).redirect("https://google.ca");
+    }
+
     MessageController.onMessage(name, email, message)
       .then(() => {
-        res.status(200).redirect(`${FRONTEND_URL}/index.html?success=1#footer`);
+        res.status(200).redirect(`${FRONTEND_URL}/#success`);
       })
       .catch((error) => {
         res.status(500).send("Internal Server Error");
